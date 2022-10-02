@@ -44,7 +44,7 @@ class AuthService {
     }
   }
 
-  //register with enail &pass
+  //register with email &pass
 
   Future registerEmailPassword(String email, String password) async {
     try {

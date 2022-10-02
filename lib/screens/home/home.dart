@@ -1,4 +1,5 @@
 import 'package:firebase_conection/screens/home/brew_list.dart';
+import 'package:firebase_conection/screens/home/setting_from.dart';
 import 'package:firebase_conection/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_conection/services/database.dart';
@@ -10,6 +11,21 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void showSettingPanel() {
+      showBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              //width: 360
+              //hight:760
+              height: 400,
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+              child: const SettingFrom(),
+            );
+          });
+    }
+
     return StreamProvider<List>.value(
       value: DatabaseService.withoutUID().brews,
       initialData: const [],
@@ -26,10 +42,22 @@ class Home extends StatelessWidget {
               },
               icon: const Icon(Icons.person),
               label: const Text('logout'),
+            ),
+            TextButton.icon(
+              onPressed: () => showSettingPanel(),
+              icon: const Icon(Icons.settings),
+              label: const Text('Setting'),
             )
           ],
         ),
-        body: const BrewList(),
+        body: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/coffee_bg.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: const BrewList()),
       ),
     );
   }
